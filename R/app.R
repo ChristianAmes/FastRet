@@ -1,16 +1,18 @@
+#' A Cat Function
+#'
+#' This function allows you to express your love of cats.
+#' @param love Do you love cats? Defaults to TRUE.
+#' @keywords cats
+#' @export
+#' @examples
+#' cat_function()
+#' 
 library(shiny)
 library(shinyhelper)
 library(shinybusy)
 
-source("src/getCD.R")
-source("src/shinySrc/shiny.train.R")
-source("src/shinySrc/shiny.sm.R")
-source("src/shinySrc/train.lm.R")
-source("src/shinySrc/validate.inputdata.R")
-source("src/shinySrc/mult.pred.R")
-source("src/plot.boxplots.R")
-source("src/hmdb.workflow.ppp.R")
-source("src/preprocess.data.R")
+
+FastRet<- function(){ 
 # Define UI  ----
 ui <- fluidPage(
   
@@ -338,3 +340,4 @@ server <- function(input, output) {
 
 # Create Shiny app ----
 shinyApp(ui = ui, server = server)
+}
