@@ -34,7 +34,6 @@ retip.workflow <- function(data, method = "glmnet",
                            degree_polynomial = 2, scale = T) {
 
   
-  set.seed(123)
   # calculate Chemical descriptors, clear data
   # and add additional columns (polynomials and
   # interactions)

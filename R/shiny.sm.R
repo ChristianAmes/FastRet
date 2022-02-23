@@ -1,8 +1,5 @@
 shiny.sm<-function(raw_data, method, k_cluster){
-  source("src/preprocess.data.R")
-  source("src/getCD.R")
-  source("src/add.hmdb.ppp.R")
-  source("src/fit.glmnet.R")
+
   # validate input data ---- 
   raw_data<- data.frame(raw_data)
   validate.inputdata(raw_data)
