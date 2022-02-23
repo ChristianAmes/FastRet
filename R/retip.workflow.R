@@ -32,11 +32,7 @@ retip.workflow <- function(data, method = "glmnet",
                            preprocessed = F, interaction_terms = F, split_method = "CV",
                            reverse_split = F, nfolds = 2, include_polynomial = F,
                            degree_polynomial = 2, scale = T) {
-  source("src/create.split.R")
-  source("src/get.stats.R")
-  source("src/fit.glmnet.R")
-  source("src/preprocess.data.R")
-  source("src/fit.xgboost.R")
+
   
   set.seed(123)
   # calculate Chemical descriptors, clear data

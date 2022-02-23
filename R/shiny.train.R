@@ -1,8 +1,4 @@
 shiny.train<- function(raw_data, method){
-  source("src/retip.workflow.R")
-  source("src/preprocess.data.R")
-  source("src/getCD.R")
-  
 
   raw_data<- data.frame(raw_data)
   validate.inputdata(raw_data)
