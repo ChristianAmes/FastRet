@@ -3,14 +3,10 @@
 #' This function shows you the FastRet GUI
 #' @param open  Defaults to TRUE.
 #' @keywords FastRet
+#' @import shiny
+#' @import shinyhelper
+#' @import shinybusy
 #' @export
-#' @examples
-#' FastRet()
-#'
-library(shiny)
-library(shinyhelper)
-library(shinybusy)
-
 
 FastRet<- function(){
 # Define UI  ----
