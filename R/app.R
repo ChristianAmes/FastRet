@@ -1,27 +1,27 @@
-#' A Cat Function
+#' @title Shiny app FastRet main function
 #'
-#' This function allows you to express your love of cats.
-#' @param love Do you love cats? Defaults to TRUE.
-#' @keywords cats
+#' This function shows you the FastRet GUI
+#' @param open  Defaults to TRUE.
+#' @keywords FastRet
 #' @export
 #' @examples
-#' cat_function()
-#' 
+#' FastRet()
+#'
 library(shiny)
 library(shinyhelper)
 library(shinybusy)
 
 
-FastRet<- function(){ 
+FastRet<- function(){
 # Define UI  ----
-ui <- fluidPage(
-  
-  # App title ----
-  titlePanel("LCMS Retention Time prediciton"),
-  
+ui <- shiny::fluidPage(
+  devtools::load_all(""),
+  # title ----
+  shiny::titlePanel("LCMS Retention Time prediciton"),
+
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
-    
+
     # Sidebar panel for inputs ----
     sidebarPanel(
       helper(
@@ -29,12 +29,12 @@ ui <- fluidPage(
                     c("Train new Model",
                     "Selective Measuring",
                     "Utilize Model to predict on new Data")),
-      
+
        icon = "question-circle",
        colour = "#696969",
        type = "markdown",
        content = "HelpMode"),
-      # Selective Measuring and Train new Model ---- 
+      # Selective Measuring and Train new Model ----
       conditionalPanel(
         condition = "input.mode == 'Selective Measuring' ||
                      input.mode == 'Train new Model'",
@@ -44,53 +44,53 @@ ui <- fluidPage(
         colour = "#696969",
         type = "markdown",
         content = "HelpData"),
-        
+
       ),
-      # Train new Model ---- 
+      # Train new Model ----
       conditionalPanel(
         condition = "input.mode == 'Train new Model'",
         helper(
           radioButtons("method", h3("Method"),
                      choices = list("Lasso" = 1,
                                     "XGBoost" = 2),selected = 1),
-        
+
                icon = "question-circle",
                colour = "#696969",
                type = "markdown",
-               content = "HelpMethod"),  
-        
-        
-        
+               content = "HelpMethod"),
+
+
+
         actionButton("train","Train Model and get evaluation"),
         downloadButton("save_model","save Model"),
         downloadButton("save_predictors", "save predictor set as csv")
-        
+
       ),
-      # Selective Measuring ---- 
+      # Selective Measuring ----
       conditionalPanel(
         condition = "input.mode == 'Selective Measuring'",
-        
-        numericInput("k", 
-                     h3("k Cluster "), 
+
+        numericInput("k",
+                     h3("k Cluster "),
                      value = 25),
-        
-      
+
+
         actionButton("sm2","Calculate Cluster and Medodids"),
         downloadButton("save_cluster","Save Cluster and Medoids as .xlsx")
       ),
-      # Utilize Model to predict on new Data ---- 
+      # Utilize Model to predict on new Data ----
       conditionalPanel(
         condition = "input.mode == 'Utilize Model to predict on new Data'",
-        
+
         helper(
           fileInput("pretrained_model", "Upload a pretrained Model"),
           icon = "question-circle",
           colour = "#696969",
           type = "markdown",
-          content = "HelpModel"),  
-        
-        
-        
+          content = "HelpModel"),
+
+
+
         helper(
           checkboxInput("lm_transfer","Use measured metabolites to adjust Prediciton"),
           icon = "question-circle",
@@ -99,9 +99,9 @@ ui <- fluidPage(
           content = "HelpLm"),
         conditionalPanel(
           condition = "input.lm_transfer == true",
-          
+
           fileInput("lm_data", h3("Transfer data to train lm as .xlsx file"), accept = ".xlsx"),
-          
+
           checkboxGroupInput("lm_predictors", h3("Choose components of lm"),
                              choices = list("x^2" = 1,
                                             "x^3"= 2,
@@ -109,7 +109,7 @@ ui <- fluidPage(
                                             "exp(x)" = 4,
                                             "sqrt(x)" = 5)),
           actionButton("lm_analyze","Analyze Linear Model")
-          
+
           ),
         textInput("smiles", "Input SMILES", value = ""),
         actionButton("single_pred","Calculate single input"),
@@ -118,18 +118,18 @@ ui <- fluidPage(
           icon = "question-circle",
           colour = "#696969",
           type = "markdown",
-          content = "HelpPredData"),  
+          content = "HelpPredData"),
         actionButton("mult_pred","Calculate predictions for input file"),
         downloadButton("save_mult_pred","Save predictions for input file")
-        
+
       )
-      
+
     ),
-    
+
     # Main panel for displaying outputs ----
     mainPanel(
-      
-      # Output: 
+
+      # Output:
       plotOutput("lmplot"),
       add_busy_spinner(spin = "fading-circle"),
       verbatimTextOutput("single_pred_out"),
@@ -146,31 +146,31 @@ ui <- fluidPage(
 )
 # Server ----
 server <- function(input, output) {
-  
+
   text_log <- reactiveVal("")
   observe_helpers(help_dir = "src/shinyHelp")
     v_train<- reactive({
       validate(
         need(input$inputdata != "", "Please select a excel sheet with the required data"),
-        
-        
+
+
       )
     })
 
     # Calculate and evaluate new Model ----
-  calc_model<- reactive ({ 
-    
+  calc_model<- reactive ({
+
     shiny.train(raw_data= as.data.frame(
-                readxl::read_excel(input$inputdata$datapath,sheet=1)), 
+                readxl::read_excel(input$inputdata$datapath,sheet=1)),
                 method = input$method)
-    
+
     })
   observeEvent(input$train,{
                output$scatterplot<- renderPrint({
                  print("Scatterplot with identity")
                 })
                output$plot <- renderPlot({
-                 # Check Input Data ------- 
+                 # Check Input Data -------
                  v_train()
                  calc_model()$plot})
                output$boxplot<- renderPrint({
@@ -181,18 +181,18 @@ server <- function(input, output) {
                   })}
                )
 
-  
-  
+
+
   # Selective Measuring 2.0 ----
   cluster_calc <- reactive( {
-    shiny.sm(raw_data = as.data.frame(readxl::read_excel(input$inputdata$datapath,sheet=1)), 
+    shiny.sm(raw_data = as.data.frame(readxl::read_excel(input$inputdata$datapath,sheet=1)),
              method = input$method, k_cluster = input$k)
-    
+
   })
-  
-  
-  
-  
+
+
+
+
   observeEvent(input$sm2, {
                 output$medoidtable<- renderPrint({
                   print("Medoids:")
@@ -203,7 +203,7 @@ server <- function(input, output) {
                   cluster$medoids[,c("NAME","SMILES")]
                 })
                 })
-  
+
   output$save_predictors<- downloadHandler(
     filename = function() {
            paste('predictor_set_', Sys.Date(), '.xlsx', sep='')
@@ -212,7 +212,7 @@ server <- function(input, output) {
       xlsx::write.xlsx(calc_model()$predictor_set, file, row.names = TRUE)
     }
   )
-  
+
   output$save_model<- downloadHandler(
     filename = function() {
       paste('model-', Sys.Date(), sep='')
@@ -221,97 +221,97 @@ server <- function(input, output) {
       saveRDS(calc_model(), file)
     }
   )
-  
+
   output$save_cluster <- downloadHandler(
     filename = paste("Cluster_k_",input$k,".xlsx",sep=""),
     content = function(file) {
-      
-      
-      xlsx::write.xlsx(cluster_calc()$cluster[[1]], file, sheetName = paste("cluster",1,sep="" )) 
-      
+
+
+      xlsx::write.xlsx(cluster_calc()$cluster[[1]], file, sheetName = paste("cluster",1,sep="" ))
+
       for (i in 2:input$k){
         xlsx::write.xlsx(cluster_calc()$cluster[[i]], file, sheetName = paste("cluster",i,sep="" ), append = TRUE)
       }
       xlsx::write.xlsx(cluster_calc()$medoids, file, sheetName = "medoids", append = TRUE)
-      
+
       #write.xlsx(cluster_calc()$medoids, file, row.names = FALSE)
     }
   )
-  
-         
-  # Create lm to adjust RT ---- 
+
+
+  # Create lm to adjust RT ----
   lm_adjust<- reactive({
-    
-    
+
+
     train.lm( original_data= readRDS(input$pretrained_model$datapath)$predictor_set,
               new_data = as.data.frame(
                 readxl::read_excel(input$lm_data$datapath,sheet=1)),
               predictors = input$lm_predictors
             )
-    
+
   })
-  
+
   observeEvent(input$lm_analyze,{
-    
+
     output$lmplot<- renderPlot({
-      
+
       original_data <- readRDS(input$pretrained_model$datapath)$predictor_set
       new_data <- as.data.frame(
         readxl::read_excel(input$lm_data$datapath,sheet=1))
       lm_model <- lm_adjust()
-      
+
       new_data$SMILES<-lapply(new_data$SMILES,
                               function(x) rcdk::parse.smiles(as.character(unlist(x)))[[1]])
       new_data$SMILES <- lapply(new_data$SMILES,
                                 function(x) rcdk::get.smiles(x, rcdk::smiles.flavors(c("CxSmiles"))))
-      
+
       x <- original_data[which(rownames(original_data) %in% new_data$SMILES),]
       x<- x[unlist(new_data$SMILES),]
       y <- new_data$RT[which(new_data$SMILES %in% rownames(original_data))]
-      
+
       plot(x[,"RT"],y)
       abline(a=0,b=1,col="#c04a30")
       lines(sort(x[,"RT"]),predict(lm_model,prepare.x(x[order(x[,"RT"]),"RT"],input$lm_predictors)),type="l",col="#2a92a9")
-      
+
     })
-    
-    
+
+
   })
-  
-  # Predict single ---- 
+
+  # Predict single ----
   observeEvent(input$single_pred,{
     model<- readRDS(input$pretrained_model$datapath)
-    
+
     x<- getCD(data.frame(SMILES=c(input$smiles,input$smiles),
                            RT= c(0,0)))[1,]
-      
-    
-    
+
+
+
     x<- x[colnames(model$predictor_set)]
-    x$RT<- NULL 
+    x$RT<- NULL
     x<- as.matrix(x)
     x<- rbind(x,x)
     x<- predict(model$scaling_model,x)
-    
+
     if(model$method== "glmnet"){
       pred<- glmnet::predict.glmnet(model$final_model,newx=x)
       pred<- pred[1]
-    }else{ 
+    }else{
       pred<- predict(model$final_model,newx=x)
       pred<- pred[1]
     }
-    
+
       text_log(paste(text_log(),"Prediction for the following Metabolite \n"))
       text_log(paste(text_log(),"SMILES:",isolate(input$smiles),"\n"))
       text_log(paste(text_log(), "Retention time: ",pred,"\n"))
-    
-    
+
+
   })
   output$single_pred_out<- renderText({
     text_log()
   })
-  
-  # Predict Mult ---- 
+
+  # Predict Mult ----
   mult_pred_react<- reactive({
    mult.pred(model = readRDS(input$pretrained_model$datapath),
              pred_data = as.data.frame(
@@ -320,19 +320,19 @@ server <- function(input, output) {
              lm_model = lm_adjust(),
              lm_predictors = input$lm_predictors
    )
-    
+
   })
-  
+
   observeEvent(input$mult_pred,{
         output$mult_pred_out<- renderTable({
       mult_pred_react()[,c("NAME","SMILES","pred_RT")]
     })
-    
+
   })
   output$save_mult_pred <- downloadHandler(
     filename = "predictions.xlsx",
     content = function(file) {
-      xlsx::write.xlsx(mult_pred_react(), file, sheetName = "predictions") 
+      xlsx::write.xlsx(mult_pred_react(), file, sheetName = "predictions")
     }
   )
   return(NULL)
