@@ -422,6 +422,6 @@ server <- function(input, output) {
 }
 
 # Create Shiny app ----
-devtools::load_all("")
+#devtools::load_all("")
 shinyApp(ui = ui, server = server)
 }
