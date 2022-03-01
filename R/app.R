@@ -22,7 +22,6 @@
 FastRet<- function(){
 # Define UI  ----
 ui <- shiny::fluidPage(
-  devtools::load_all(""),
   # title ----
   shiny::titlePanel("LCMS Retention Time prediciton"),
 
@@ -423,5 +422,6 @@ server <- function(input, output) {
 }
 
 # Create Shiny app ----
+devtools::load_all("")
 shinyApp(ui = ui, server = server)
 }
