@@ -31,7 +31,6 @@
 #' @param degree_polynomial specifies degree up until which polynomials will be added if include_polynomials == TRUE
 #' @param interaction_terms TRUE if interaction terms between all variables should be added
 #' @param nfolds number of folds for cross validation
-#' @param
 #' @keywords FastRet
 #' @import shiny
 #' @import shinyhelper

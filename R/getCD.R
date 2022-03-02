@@ -1,9 +1,18 @@
+#' @title Calculate Chemical Descriptors using RCDK
+#' Calculate Chemical Descriptors using RCDK
+#'
+#' @param x dataframe with two mandatory column: "Name" and "SMILES"
+#' @param verbose TRUE if additional print output should be shown
+#' @keywords FastRet
+#' @import rcdk
+#' @export
+
 #getCD(get Chemical Descriptors)
 #function expects data as dataframe with column SMILES
 #using the package rcdk 291 chemical descriptors will get calculated and returned
 #function is based on Retip::getCD
 
-getCD <- function (x, verbose = FALSE) 
+getCD <- function (x, verbose = FALSE)
 {
   print(paste0("Converting SMILES..."))
   for (i in 1:nrow(x)) {
@@ -19,7 +28,7 @@ getCD <- function (x, verbose = FALSE)
   mols_x <- rcdk::parse.smiles(as.character(unlist(x[1, "SMILES"])))
   descs1_x <- rcdk::eval.desc(mols_x, descNames1)
   for (i in 2:nrow(x)) {
-    mols1 <- rcdk::parse.smiles(as.character(unlist(x[i, 
+    mols1 <- rcdk::parse.smiles(as.character(unlist(x[i,
                                                       "SMILES"])))
     descs1_x[i, ] <- rcdk::eval.desc(mols1, descNames1)
     if (verbose){ print(paste0(i, " of ", nrow(x)))}
@@ -27,19 +36,19 @@ getCD <- function (x, verbose = FALSE)
   x_na <- data.frame(descs1_x, x)
   x_na_rem <- x_na[stats::complete.cases(descs1_x), ]
   x_na_rem <- x_na_rem[, -c(1:6)]
-  print(paste0("Computing Chemical Descriptors ", 
+  print(paste0("Computing Chemical Descriptors ",
                nrow(x_na_rem), " ... Please wait"))
-  mols_x1 <- rcdk::parse.smiles(as.character(unlist(x_na_rem[1, 
+  mols_x1 <- rcdk::parse.smiles(as.character(unlist(x_na_rem[1,
                                                              "SMILES"])))[[1]]
   rcdk::convert.implicit.to.explicit(mols_x1)
   descs_x_loop <- rcdk::eval.desc(mols_x1, descNames)
   for (i in 2:nrow(x_na_rem)) {
-    mols <- rcdk::parse.smiles(as.character(unlist(x_na_rem[i, 
+    mols <- rcdk::parse.smiles(as.character(unlist(x_na_rem[i,
                                                             "SMILES"])))[[1]]
     rcdk::convert.implicit.to.explicit(mols)
     descs_x_loop[i, ] <- rcdk::eval.desc(mols, descNames)
     if (verbose){print(paste0(i, " of ", nrow(x_na_rem)))}
-    
+
   }
   datadesc <- data.frame(x_na_rem, descs_x_loop)
   return(datadesc)
