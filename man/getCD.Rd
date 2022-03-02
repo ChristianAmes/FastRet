@@ -2,10 +2,7 @@
 % Please edit documentation in R/getCD.R
 \name{getCD}
 \alias{getCD}
-\title{Calculate Chemical Descriptors using RCDK
-getCD
-
-Calculate Chemical Descriptors using RCDK}
+\title{getCD}
 \usage{
 getCD(x, verbose = FALSE)
 }
@@ -15,9 +12,6 @@ getCD(x, verbose = FALSE)
 \item{verbose}{TRUE if additional print output should be shown}
 }
 \description{
-Calculate Chemical Descriptors using RCDK
-getCD
-
 Calculate Chemical Descriptors using RCDK
 }
 \keyword{FastRet}

@@ -1,4 +1,3 @@
-#' @title Calculate Chemical Descriptors using RCDK
 #' getCD
 #'
 #' Calculate Chemical Descriptors using RCDK

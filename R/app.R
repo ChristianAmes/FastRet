@@ -1,4 +1,3 @@
-#' @title Shiny app FastRet main function
 #' FastRet Retention time prediction
 #'
 #' This shiny function will show you a GUI where you can choose between three modes.
