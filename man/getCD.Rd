@@ -3,6 +3,8 @@
 \name{getCD}
 \alias{getCD}
 \title{Calculate Chemical Descriptors using RCDK
+getCD
+
 Calculate Chemical Descriptors using RCDK}
 \usage{
 getCD(x, verbose = FALSE)
@@ -14,6 +16,8 @@ getCD(x, verbose = FALSE)
 }
 \description{
 Calculate Chemical Descriptors using RCDK
+getCD
+
 Calculate Chemical Descriptors using RCDK
 }
 \keyword{FastRet}
