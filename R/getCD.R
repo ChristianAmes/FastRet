@@ -1,4 +1,6 @@
 #' @title Calculate Chemical Descriptors using RCDK
+#' getCD
+#'
 #' Calculate Chemical Descriptors using RCDK
 #'
 #' @param x dataframe with two mandatory column: "Name" and "SMILES"

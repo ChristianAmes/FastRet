@@ -1,4 +1,6 @@
 #' @title Retip workflow
+#' Retention time prediction  workflow
+#'
 #' Whole retention time prediction workflow. Function creates predictor set with RCDK based on SMILES.
 #' Trains a chosen predcition model and validates the approach with a cross validation.
 #'

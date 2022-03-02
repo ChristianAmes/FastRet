@@ -1,10 +1,10 @@
 #' @title Shiny app FastRet main function
+#' FastRet Retention time prediction
 #'
 #' This shiny function will show you a GUI where you can choose between three modes.
 #' - Train new Model
 #' - Selective Measuring
 #' - Utilize Model on new data
-
 #' Each mode is shortly described here. For more information about the inputs see the (?) behind the corresponding input.
 #' ## Train new Model
 #' This is usually the first step you take, this mode allows you to create and evaluate a Model on your own new data. Model can be trained with various parameters and afterwards the regression model as well as the predictor set can be downloaded. As an evaluation this step outputs you a scatterplot of your regression model as well as a boxplot with its general performance.
