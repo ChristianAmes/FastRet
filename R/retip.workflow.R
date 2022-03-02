@@ -1,26 +1,7 @@
-#' @title Retip
-# Main retention time prediction workflow expects
-# data as dataframe with 4 columns NAME, INCHKEY,
-# SMILES, RT
-
-# takes following optional variables:
-#   method: either 'xgboost' or 'glmnet' method
-#     used for training models
-#   data_set_name: name of data set, appears on plots
-#   verbose: if TRUE additional prints get executed (useful for debugging)
-#   final_model: if TURE a model on all data gets trained and
-#     returned for later use on new data
-
-# Prepare data set variables
-#   preprocessed: if TRUE no additional
-#     preprocessing gets done
-#   scale: if TRUE data gets scaled and scaling model gets returned
-#   include_polynomial: if TRUE polynomials of each
-#     columns get added as new one
-#   degree_polynomial: defines how many polynomials get added (if 3
-#     quadratic and cubic terms get added)
-#   interaction_terms: if T all interaction terms
-#     get added to data set
+#' @title Retip workflow
+#' Whole retention time prediction workflow. Function creates predictor set with RCDK based on SMILES.
+#' Trains a chosen predcition model and validates the approach with a cross validation.
+#'
 #' @param data  data.frame with columns NAME, RT, SMILES
 #' @param method prediction algorithm, either glmnet or xgboost
 #' @param verbose additional print outputs to user if TRUE

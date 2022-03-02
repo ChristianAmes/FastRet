@@ -2,7 +2,9 @@
 % Please edit documentation in R/retip.workflow.R
 \name{retip.workflow}
 \alias{retip.workflow}
-\title{Retip}
+\title{Retip workflow
+Whole retention time prediction workflow. Function creates predictor set with RCDK based on SMILES.
+Trains a chosen predcition model and validates the approach with a cross validation.}
 \usage{
 retip.workflow(
   data,
@@ -40,6 +42,8 @@ retip.workflow(
 \item{include_polynomials}{TRUE if polynomial terms should be added to descriptor set}
 }
 \description{
-Retip
+Retip workflow
+Whole retention time prediction workflow. Function creates predictor set with RCDK based on SMILES.
+Trains a chosen predcition model and validates the approach with a cross validation.
 }
 \keyword{FastRet}
