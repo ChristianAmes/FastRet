@@ -6,9 +6,6 @@
 \usage{
 FastRet()
 }
-\arguments{
-\item{open}{Defaults to TRUE.}
-}
 \description{
 This shiny function will show you a GUI where you can choose between three modes.
 \itemize{

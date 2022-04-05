@@ -11,7 +11,6 @@
 #' This mode calculates on a given dataset the best k molecules to be measured for a retention time prediction. It uses a combination of Ridge Regression and k-means to determine the best representatives of your dataset. Representatives as well as their corresponding clusters can be downloaded afterwards as an excel file. This step should be used once you have a predictive model ond/or data set and want to use it for new column/gradient/temperature... combination.
 #' ## Utilize model on new data
 #' This step requires a pretrained model which can be uploaded. Afterwards you can use your model to predict retention times of new metabolites by providing either a single SMILE/HMDB ID combination or a whole list of molecules.
-#' @param open  Defaults to TRUE.
 #' @keywords FastRet
 #' @import shiny
 #' @import shinyhelper

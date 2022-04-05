@@ -1,0 +1,23 @@
+---
+title: "FastRet Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FastRet Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Welcome to this introduction vignette for FastRet. THis tutorial will show you how to use FastRet and what to pay attention to when using it.
+
+Starting the Interface iseasily done with one line of Code
+```{r setup}
+library(FastRet)
+
+```
