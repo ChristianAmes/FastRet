@@ -12,6 +12,6 @@ getCD(x, verbose = FALSE)
 \item{verbose}{TRUE if additional print output should be shown}
 }
 \description{
-Calculate Chemical Descriptors using RCDK
+Calculate Chemical Descriptors using RCDK, function is based on Retip::getCD.
 }
 \keyword{FastRet}

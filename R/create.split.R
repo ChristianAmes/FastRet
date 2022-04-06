@@ -34,8 +34,8 @@ create.split <- function(split_method, data, n = 10) {
     # create splits according to their weighted clustered Descriptors
 
 
-    #' Train Elastic Net on all data
-    #'
+    # Train Elastic Net on all data
+
 
     model<- fit.glmnet(data,alpha =0)
 
@@ -43,8 +43,8 @@ create.split <- function(split_method, data, n = 10) {
     weights <- data.frame(name = weights@Dimnames[[1]][weights@i + 1], coefficient = weights@x)
     weights <- weights[-1,]
 
-    #' Use the coefficients of trained model as feature weights
-    #'
+    # Use the coefficients of trained model as feature weights
+
 
 
     RT<- data$RT

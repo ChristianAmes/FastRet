@@ -4,7 +4,6 @@
 plot.boxplot <- function(model1, model2, model3, model4,
                          main = "main", name1 = "model1", name2 = "model2",
                          name3 = "model3", name4 = "model4", save_plot = F) {
-  library(ggplot2)
   stats <- t(matrix(as.numeric(unlist(model1$stats)),
                     nrow = 4))
   rmse <- stats[, 1]
@@ -13,7 +12,7 @@ plot.boxplot <- function(model1, model2, model3, model4,
   percentage <- stats[, 4]
   models <- rep(name1, nrow(stats))
   measure_count <- nrow(stats)
-  
+
   if (!missing(model2)) {
     stats <- t(matrix(as.numeric(unlist(model2$stats)),
                       nrow = 4))
@@ -24,7 +23,7 @@ plot.boxplot <- function(model1, model2, model3, model4,
     models <- c(models, rep(name2, nrow(stats)))
     measure_count <- measure_count + nrow(stats)
   }
-  
+
   if (!missing(model3)) {
     stats <- t(matrix(as.numeric(unlist(model3$stats)),
                       nrow = 4))
@@ -45,17 +44,17 @@ plot.boxplot <- function(model1, model2, model3, model4,
     models <- c(models, rep(name4, nrow(stats)))
     measure_count <- measure_count + nrow(stats)
   }
-  
+
   models <- as.factor(rep(models, 4))
   measures <- c(rmse, r2, mae, percentage)
   measure_type <- as.factor(c(rep("RMSE", measure_count),
                               rep("R2", measure_count), rep("MAE", measure_count),
                               rep("% below 1 min", measure_count)))
-  
-  
+
+
   df <- data.frame(measures, LC_column = models,
                    measure_type)
-  
+
   p <- ggplot2::ggplot(df, ggplot2::aes(x = measure_type,
                                         y = measures))
   p <- p + ggplot2::xlab("performance measure") + ylab("")
@@ -66,13 +65,13 @@ plot.boxplot <- function(model1, model2, model3, model4,
   p <- p + ggplot2::scale_fill_manual(values = c("#ff0000",
                                                  "#0000FF", "#00FF00", "#999999"))
   p <- p + ggplot2::ggtitle(main)
-  
+
   if (save_plot) {
     pdf(paste0("results/", main, ".pdf"))
-    
+
     print(p)
     dev.off()
   }
-  
+
   return(p)
 }

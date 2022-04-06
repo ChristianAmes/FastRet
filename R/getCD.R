@@ -1,17 +1,12 @@
 #' getCD
 #'
-#' Calculate Chemical Descriptors using RCDK
+#' Calculate Chemical Descriptors using RCDK, function is based on Retip::getCD.
 #'
 #' @param x dataframe with two mandatory column: "Name" and "SMILES"
 #' @param verbose TRUE if additional print output should be shown
 #' @keywords FastRet
 #' @import rcdk
 #' @export
-
-#getCD(get Chemical Descriptors)
-#function expects data as dataframe with column SMILES
-#using the package rcdk 291 chemical descriptors will get calculated and returned
-#function is based on Retip::getCD
 
 getCD <- function (x, verbose = FALSE)
 {
