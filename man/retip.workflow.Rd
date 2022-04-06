@@ -35,9 +35,11 @@ retip.workflow(
 
 \item{nfolds}{number of folds for cross validation}
 
+\item{include_polynomial}{TRUE if polynomial terms should be added to descriptor set}
+
 \item{degree_polynomial}{specifies degree up until which polynomials will be added if include_polynomials == TRUE}
 
-\item{include_polynomials}{TRUE if polynomial terms should be added to descriptor set}
+\item{scale}{if TRUE, all variables will be centered to a mean of 0 and scaled to a standard deviation of 1}
 }
 \description{
 Whole retention time prediction workflow. Function creates predictor set with RCDK based on SMILES.

@@ -9,10 +9,11 @@
 #' @param data_set_name name of dataset will appear on validation plot
 #' @param final_model TRUE if final model trained on whole dataset should be returned
 #' @param preprocessed TRUE if data is already preprocessed and descriptor varialbes are already added
-#' @param include_polynomials TRUE if polynomial terms should be added to descriptor set
+#' @param include_polynomial TRUE if polynomial terms should be added to descriptor set
 #' @param degree_polynomial specifies degree up until which polynomials will be added if include_polynomials == TRUE
 #' @param interaction_terms TRUE if interaction terms between all variables should be added
 #' @param nfolds number of folds for cross validation
+#' @param scale if TRUE, all variables will be centered to a mean of 0 and scaled to a standard deviation of 1
 #' @keywords FastRet
 #' @import shiny
 #' @import shinyhelper
@@ -25,7 +26,7 @@ retip.workflow <- function(data, method = "glmnet",
                            nfolds = 2, include_polynomial = F,
                            degree_polynomial = 2, scale = T) {
   reverse_split = F
-  split_method<- "cv"
+  split_method<- "CV"
   # calculate Chemical descriptors, clear data
   # and add additional columns (polynomials and
   # interactions)

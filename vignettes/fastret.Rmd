@@ -14,10 +14,35 @@ knitr::opts_chunk$set(
 )
 ```
 
-Welcome to this introduction vignette for FastRet. THis tutorial will show you how to use FastRet and what to pay attention to when using it.
+Welcome to this introduction vignette for FastRet. THis tutorial will show you how to use FastRet and what to pay attention to when using it. 
 
-Starting the Interface iseasily done with one line of Code
+
 ```{r setup}
 library(FastRet)
 
 ```
+
+Before starting our analysis lets save some data just as you might have it laying around. The resulting excel file does need to have three columns, RT, SMILES and NAME. 
+
+```{r data}
+data(RP)
+xlsx::write.xlsx(RP,file= "~/RP_data.xlsx",row.names = F)
+``` 
+Starting the interface is done with one line of code. From now on there is no need to use R anymore.
+```{r gui,eval = FALSE}
+
+FastRet()
+
+```
+
+All objects are additionally explained in more detail if you click on the question mark. 
+![01](01.png)
+
+
+Staying in the category "Train Model" we can upload our previously saved excel file and start training the regression model. This might take some time depending on the size of the training set. This is due to the process of calculating chemical descriptors with rcdk. On the top right you can see a loading symbol if the process is still running. 
+
+Once the training is complete, a simple boxplot with some performance measures as well as a scatterplot of predicted~actual retention time is shown. This can be used to get a first impression of the performance that can be expected. 
+
+
+
+If you want to utilize the trained model on new data, you have to first save the model and then reload it again in the "Utilize Model" categorie.

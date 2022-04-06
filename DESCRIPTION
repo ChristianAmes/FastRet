@@ -5,17 +5,25 @@ Authors@R:
     person("Christian", "Amesoeder", , "christian.amesoeder@stud.uni-regensburg.de", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
-License: use_mit_license()
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+LazyData: TRUE
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Depends: R (>= 2.10)
 Imports: 
     rcdk, 
     shiny,
     shinybusy,
     shinyhelper,
-    readxl
+    readxl,
+    glmnet,
+    caret,
+    xgboost,
+    xlsx,
+    ggplot2,
+    pdist

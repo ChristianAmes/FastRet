@@ -93,7 +93,7 @@ ui <- shiny::fluidPage(
 <h2 id=\"xgboost\">XGBoost</h2>
 <p>XGBoost is a more soffisticated Machine Learning method based on Boosted Regression Trees (BRT) [3]. The main difference to random forest is, that trees are not trained independant from each other but each tree is built with a loss function based on its predecessor. It was implemented with the R-package XGBoost [4].</p>
 <h2 id=\"references\">References</h2>
-<p>[1] Santosa, Fadil; Symes, William W. (1986). &quot;Linear inversion of band-limited reflection seismograms&quot;. <em>SIAM Journal on Scientific and Statistical Computing</em>. SIAM. <strong>7</strong> (4): 1307–1330
+<p>[1] Santosa, Fadil; Symes, William W. (1986). &quot;Linear inversion of band-limited reflection seismograms&quot;. <em>SIAM Journal on Scientific and Statistical Computing</em>. SIAM. <strong>7</strong> (4): 1307<e2><80><93>1330
 [2] Jerome Friedman, Trevor Hastie, Robert Tibshirani (2010).
   Regularization Paths for Generalized Linear Models via
   Coordinate Descent. Journal of Statistical Software, 33(1),
