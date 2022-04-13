@@ -7,9 +7,8 @@
 <!-- badges: end -->
 
 The goal of FastRet is to provide easy retention time prediction for
-Liquid Chromatography for small datasets. By providing a GUI to navigate
-through the steps. The package utilizes rcdk to get predictor variables
-from SMILES and training regression model (Lasso/XGBoost) on this data.
+Liquid Chromatography especially with small datasets and adapt this prediction for new experiment setups.
+By providing a GUI to navigate through the steps we removed all barriers to entry this domain of science. The package utilizes rcdk to get predictor variables from SMILES and training regression model (Lasso/XGBoost) on this data.
 
 ## Installation
 
