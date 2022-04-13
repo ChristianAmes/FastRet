@@ -211,7 +211,8 @@ The coefficients of the model can be selected or unselected depending on the nee
     mainPanel(
 
       # Output:
-      plotOutput("lmplot"),
+
+
       add_busy_spinner(spin = "fading-circle"),
       verbatimTextOutput("single_pred_out"),
       tableOutput("mult_pred_out"),
@@ -221,7 +222,9 @@ The coefficients of the model can be selected or unselected depending on the nee
       verbatimTextOutput("scatterplot"),
       plotOutput("plot"),
       verbatimTextOutput("boxplot"),
-      plotOutput("plot2")
+      plotOutput("plot2"),
+      plotOutput("lmplot")
+
     )
   )
 )

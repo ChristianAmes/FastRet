@@ -1,4 +1,4 @@
-# Welcome to Ret!
+# Welcome to FastRet!
 
 With this R shiny tool you can choose between three modes. 
 
