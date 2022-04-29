@@ -4,7 +4,7 @@ Version: 0.0.8.1
 Authors@R: 
     person("Christian", "Amesoeder", , "christian.amesoeder@stud.uni-regensburg.de", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: FastRet helps provides a workflow for retention time prediciton. This is mainly but not exclusively done with a GUI.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

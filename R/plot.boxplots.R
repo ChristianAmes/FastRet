@@ -57,9 +57,10 @@ plot.boxplot <- function(model1, model2, model3, model4,
 
   p <- ggplot2::ggplot(df, ggplot2::aes(x = measure_type,
                                         y = measures))
-  p <- p + ggplot2::xlab("performance measure") + ylab("")
-  p <- p + ggplot2::geom_boxplot(position = position_dodge(0.75),
-                                 aes(fill = LC_column))
+  p <- p + ggplot2::xlab("performance measure")
+  p <- p + ggplot2::ylab("")
+  p <- p + ggplot2::geom_boxplot(position = ggplot2::position_dodge(0.75),
+                                 ggplot2::aes(fill = LC_column))
   p <- p + ggplot2::theme_bw()
   p <- p + ggplot2::coord_cartesian(ylim = c(0, 2.8))
   p <- p + ggplot2::scale_fill_manual(values = c("#ff0000",
@@ -67,10 +68,10 @@ plot.boxplot <- function(model1, model2, model3, model4,
   p <- p + ggplot2::ggtitle(main)
 
   if (save_plot) {
-    pdf(paste0("results/", main, ".pdf"))
+    grDevices::pdf(paste0("results/", main, ".pdf"))
 
     print(p)
-    dev.off()
+    grDevices::dev.off()
   }
 
   return(p)

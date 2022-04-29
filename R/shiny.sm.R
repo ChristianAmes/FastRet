@@ -22,7 +22,7 @@ shiny.sm<-function(raw_data, method, k_cluster){
 
   model<- fit.glmnet(tmp_data,alpha =0)
 
-  weights <- coef(model)
+  weights <- glmnet::coef.glmnet(model)
   weights <- data.frame(name = weights@Dimnames[[1]][weights@i + 1], coefficient = weights@x)
   weights <- weights[-1,]
 
@@ -45,7 +45,7 @@ shiny.sm<-function(raw_data, method, k_cluster){
   tmp_data <- cbind(data[which(data$SMILES%in% smiles),"RT"], tmp_data)
 
 
-  cluster <- kmeans(tmp_data,centers=as.numeric(k_cluster), iter.max = 30,
+  cluster <- stats::kmeans(tmp_data,centers=as.numeric(k_cluster), iter.max = 30,
                     nstart = 1)
   l<- list()
 

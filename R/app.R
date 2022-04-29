@@ -354,8 +354,8 @@ server <- function(input, output) {
       y <- new_data$RT[which(new_data$SMILES %in% rownames(original_data))]
 
       plot(x[,"RT"],y)
-      abline(a=0,b=1,col="#c04a30")
-      lines(sort(x[,"RT"]),predict(lm_model,prepare.x(x[order(x[,"RT"]),"RT"],input$lm_predictors)),type="l",col="#2a92a9")
+      graphics::abline(a=0,b=1,col="#c04a30")
+      graphics::lines(sort(x[,"RT"]),predict(lm_model,prepare.x(x[order(x[,"RT"]),"RT"],input$lm_predictors)),type="l",col="#2a92a9")
 
     })
 

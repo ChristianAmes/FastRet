@@ -20,7 +20,7 @@
 #' @import shinybusy
 #' @export
 
-retip.workflow <- function(data, method = "glmnet",
+fastret.workflow <- function(data, method = "glmnet",
                            verbose = FALSE, data_set_name = "data set", final_model = T,
                            preprocessed = F, interaction_terms = F,
                            nfolds = 2, include_polynomial = F,
@@ -99,10 +99,10 @@ retip.workflow <- function(data, method = "glmnet",
                     xgboost = fit.xgboost(db_rt),
                     glmnet = fit.glmnet(db_rt),
                     stop(paste("method \"",method, "\" is invalid ")))
-    pred<- data.frame(predict(model,as.matrix(db_rt[,-1])))
-    p<- plot(x=db_rt$RT,y=t(pred),xlab= "RT",ylab="predicted RT")
-    p<- abline(a=0,b=1,col="red")
-    return_object$plot<- p
+    pred <- data.frame(predict(model,as.matrix(db_rt[,-1])))
+    p <- graphics::plot(x=db_rt$RT,y=t(pred),xlab= "RT",ylab="predicted RT")
+    p <- graphics::abline(a=0,b=1,col="red")
+    return_object$plot <- p
   }
 
 

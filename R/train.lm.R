@@ -1,5 +1,5 @@
-train.lm <- function(original_data, new_data, predictors){ 
-  
+train.lm <- function(original_data, new_data, predictors){
+
   new_data$SMILES<-lapply(new_data$SMILES,
                           function(x) rcdk::parse.smiles(as.character(unlist(x)))[[1]])
   new_data$SMILES <- lapply(new_data$SMILES,
@@ -7,7 +7,7 @@ train.lm <- function(original_data, new_data, predictors){
   x<- original_data[which(rownames(original_data) %in% new_data$SMILES),]
   x<- x[unlist(new_data$SMILES),]
   x<- prepare.x(x$RT, predictors)
-  model<- lm(y~.,data= data.frame(y= new_data$RT,
+  model<- stats::lm(y~.,data= data.frame(y= new_data$RT,
                                   x))
   return(model)
 }
@@ -32,6 +32,5 @@ prepare.x<-function(x, predictors){
     x$sqrt<- sqrt(x$x)
   }
   return(x)
-  
+
 }
-  

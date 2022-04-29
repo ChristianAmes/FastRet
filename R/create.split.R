@@ -3,7 +3,7 @@ create.split <- function(split_method, data, n = 10) {
   if (split_method == "CV") {
 
     if (!(n %in% c(2:length(data$RT)))) {
-      stop(paste("nfolds = ", nfolds, "is invalid input must either be \"LOO\" or integer between 2 and amount of samples"))
+      stop(paste("nfolds = ", n, "is invalid input must either be \"LOO\" or integer between 2 and amount of samples"))
     }
     split <- caret::createFolds(y = data$RT, k = n)
     return(split)
@@ -13,7 +13,7 @@ create.split <- function(split_method, data, n = 10) {
     # Chemical descriptors
 
     # calculate n clusters
-    cluster <- kmeans(data, centers = n, iter.max = 30,
+    cluster <- stats::kmeans(data, centers = n, iter.max = 30,
                       nstart = 1)
 
     # create distance matrice
@@ -39,7 +39,7 @@ create.split <- function(split_method, data, n = 10) {
 
     model<- fit.glmnet(data,alpha =0)
 
-    weights <- coef(model)
+    weights <- glmnet::coef.glmnet(model)
     weights <- data.frame(name = weights@Dimnames[[1]][weights@i + 1], coefficient = weights@x)
     weights <- weights[-1,]
 
@@ -57,7 +57,7 @@ create.split <- function(split_method, data, n = 10) {
 
 
     # calculate n clusters
-    cluster <- kmeans(data, centers = n, iter.max = 30,
+    cluster <- stats::kmeans(data, centers = n, iter.max = 30,
                       nstart = 1)
 
     # create distance matrice
