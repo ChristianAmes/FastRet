@@ -41,7 +41,7 @@ fastret.workflow <- function(data, method = "glmnet",
 
     preProc <- caret::preProcess(db_rt[, -1], method = c("center",
                                                          "scale"), rangeBounds = c(0, 1))
-    db_rt <- predict(preProc, db_rt)
+    db_rt <- stats::predict(preProc, db_rt)
   } else {
     preProc <- 0
   }
@@ -76,7 +76,7 @@ fastret.workflow <- function(data, method = "glmnet",
     # analyse performance of model
     title <- paste0(data_set_name, ", ", method)
     if (length(db_rt$RT) == nfolds) {
-      stat <- predict(object = model, newx = as.matrix(testing[,
+      stat <- stats::predict(object = model, newx = as.matrix(testing[,
                                                                -1]))
     } else {
       stat <- get.stats(testing, model, name = paste0(title,
@@ -99,7 +99,7 @@ fastret.workflow <- function(data, method = "glmnet",
                     xgboost = fit.xgboost(db_rt),
                     glmnet = fit.glmnet(db_rt),
                     stop(paste("method \"",method, "\" is invalid ")))
-    pred <- data.frame(predict(model,as.matrix(db_rt[,-1])))
+    pred <- data.frame(stats::predict(model,as.matrix(db_rt[,-1])))
     p <- graphics::plot(x=db_rt$RT,y=t(pred),xlab= "RT",ylab="predicted RT")
     p <- graphics::abline(a=0,b=1,col="red")
     return_object$plot <- p

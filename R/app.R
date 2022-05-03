@@ -355,7 +355,7 @@ server <- function(input, output) {
 
       plot(x[,"RT"],y)
       graphics::abline(a=0,b=1,col="#c04a30")
-      graphics::lines(sort(x[,"RT"]),predict(lm_model,prepare.x(x[order(x[,"RT"]),"RT"],input$lm_predictors)),type="l",col="#2a92a9")
+      graphics::lines(sort(x[,"RT"]),stats::predict(lm_model,prepare.x(x[order(x[,"RT"]),"RT"],input$lm_predictors)),type="l",col="#2a92a9")
 
     })
 

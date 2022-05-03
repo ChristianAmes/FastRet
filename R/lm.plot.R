@@ -11,6 +11,6 @@ lm.plot<- function(original_data, new_data, lm_model){
 
   p <- plot(x[,"RT"],y)
   p <-  p+ graphics::abline(a=0,b=1,col="#c04a30")
-  p <- p + graphics::lines(sort(x[,"RT"]),predict(lm_model)[order(x[,"RT"])],type="l",col="#2a92a9")
+  p <- p + graphics::lines(sort(x[,"RT"]),stats::predict(lm_model)[order(x[,"RT"])],type="l",col="#2a92a9")
   return(list(p,1))
 }

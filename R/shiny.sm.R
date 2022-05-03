@@ -14,7 +14,7 @@ shiny.sm<-function(raw_data, method, k_cluster){
   preProc <- caret::preProcess(tmp_data[, -1],
                                method = c("center","scale"),
                                rangeBounds = c(0, 1))
-  tmp_data <- predict(preProc, tmp_data)
+  tmp_data <- stats::predict(preProc, tmp_data)
 
 
 

@@ -60,7 +60,7 @@ plot.boxplot <- function(model1, model2, model3, model4,
   p <- p + ggplot2::xlab("performance measure")
   p <- p + ggplot2::ylab("")
   p <- p + ggplot2::geom_boxplot(position = ggplot2::position_dodge(0.75),
-                                 ggplot2::aes(fill = LC_column))
+                                 ggplot2::aes(fill = df$LC_column))
   p <- p + ggplot2::theme_bw()
   p <- p + ggplot2::coord_cartesian(ylim = c(0, 2.8))
   p <- p + ggplot2::scale_fill_manual(values = c("#ff0000",
