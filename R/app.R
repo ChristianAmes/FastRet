@@ -28,7 +28,7 @@ ui <- shiny::fluidPage(
 
     # Sidebar panel for inputs ----
     sidebarPanel(
-      helper(
+      shinyhelper::helper(
         selectInput("mode","Mode",
                     c("Train new Model",
                     "Selective Measuring",
@@ -55,7 +55,7 @@ ui <- shiny::fluidPage(
       conditionalPanel(
         condition = "input.mode == 'Selective Measuring' ||
                      input.mode == 'Train new Model'",
-        helper(
+        shinyhelper::helper(
         fileInput("inputdata", h3("Data as .xlsx file"), accept = ".xlsx"),
         icon = "question-circle",
         colour = "#696969",
@@ -78,7 +78,7 @@ ui <- shiny::fluidPage(
       # Train new Model ----
       conditionalPanel(
         condition = "input.mode == 'Train new Model'",
-        helper(
+        shinyhelper::helper(
           radioButtons("method", h3("Method"),
                      choices = list("Lasso" = 1,
                                     "XGBoost" = 2),selected = 1),
@@ -126,7 +126,7 @@ ui <- shiny::fluidPage(
       conditionalPanel(
         condition = "input.mode == 'Utilize Model to predict on new Data'",
 
-        helper(
+        shinyhelper::helper(
           fileInput("pretrained_model", "Upload a pretrained Model"),
           icon = "question-circle",
           colour = "#696969",
@@ -158,7 +158,7 @@ This Model can also be read in with R by calling </p>
 
 
 
-        helper(
+        shinyhelper::helper(
           checkboxInput("lm_transfer","Use measured metabolites to adjust Prediciton"),
           icon = "question-circle",
           colour = "#696969",
@@ -187,7 +187,7 @@ The coefficients of the model can be selected or unselected depending on the nee
           ),
         textInput("smiles", "Input SMILES", value = ""),
         actionButton("single_pred","Calculate single input"),
-        helper(
+        shinyhelper::helper(
           fileInput("preddata", h3("New data to predict as .xlsx file"), accept = ".xlsx"),
           icon = "question-circle",
           colour = "#696969",
@@ -370,7 +370,7 @@ server <- function(input, output) {
                            RT= c(0,0)))[1,]
 
 
-
+    print(x)
     x<- x[colnames(model$predictor_set)]
     x$RT<- NULL
     x<- as.matrix(x)
