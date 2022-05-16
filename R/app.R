@@ -370,7 +370,7 @@ server <- function(input, output) {
                            RT= c(0,0)))[1,]
 
 
-    print(x)
+
     x<- x[colnames(model$predictor_set)]
     x$RT<- NULL
     x<- as.matrix(x)
