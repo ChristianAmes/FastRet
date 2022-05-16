@@ -3,7 +3,7 @@
 
 fit.glmnet<- function(x,alpha=1){
 
-  x<- data.matrix(x)
+
   print("Computing model glmnet  ... Please wait ...")
   cv_glmnet<- glmnet::cv.glmnet(x= data.matrix(x[,-which(colnames(x) =="RT")]),
                                    y = x[,which(colnames(x) =="RT")],
