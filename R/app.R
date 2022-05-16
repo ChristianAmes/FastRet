@@ -24,7 +24,7 @@ ui <- shiny::fluidPage(
   shiny::titlePanel("LCMS Retention Time prediciton"),
 
   # Sidebar layout with input and output definitions ----
-  sidebarLayout(
+  shiny::sidebarLayout(
 
     # Sidebar panel for inputs ----
     sidebarPanel(
@@ -52,7 +52,7 @@ ui <- shiny::fluidPage(
 <h2 id=\"utilize-model-on-new-data\">Utilize model on new data</h2>
 <p>This step requires a pretrained model which can be uploaded. Afterwards you can use your model to predict retention times of new metabolites by providing either a single SMILE/HMDB ID combination or a whole list of molecules.</p>"),
       # Selective Measuring and Train new Model ----
-      conditionalPanel(
+      shiny::conditionalPanel(
         condition = "input.mode == 'Selective Measuring' ||
                      input.mode == 'Train new Model'",
         shinyhelper::helper(
@@ -76,7 +76,7 @@ ui <- shiny::fluidPage(
 
       ),
       # Train new Model ----
-      conditionalPanel(
+      shiny::conditionalPanel(
         condition = "input.mode == 'Train new Model'",
         shinyhelper::helper(
           radioButtons("method", h3("Method"),
@@ -105,25 +105,25 @@ ui <- shiny::fluidPage(
 
 
 
-        actionButton("train","Train Model and get evaluation"),
-        downloadButton("save_model","save Model"),
-        downloadButton("save_predictors", "save predictor set as csv")
+        shiny::actionButton("train","Train Model and get evaluation"),
+        shiny::downloadButton("save_model","save Model"),
+        shiny::downloadButton("save_predictors", "save predictor set as csv")
 
       ),
       # Selective Measuring ----
-      conditionalPanel(
+      shiny::conditionalPanel(
         condition = "input.mode == 'Selective Measuring'",
 
-        numericInput("k",
+        shiny::numericInput("k",
                      h3("k Cluster "),
                      value = 25),
 
 
-        actionButton("sm2","Calculate Cluster and Medodids"),
-        downloadButton("save_cluster","Save Cluster and Medoids as .xlsx")
+        shiny::actionButton("sm2","Calculate Cluster and Medodids"),
+        shiny::downloadButton("save_cluster","Save Cluster and Medoids as .xlsx")
       ),
       # Utilize Model to predict on new Data ----
-      conditionalPanel(
+      shiny::conditionalPanel(
         condition = "input.mode == 'Utilize Model to predict on new Data'",
 
         shinyhelper::helper(
@@ -159,7 +159,7 @@ This Model can also be read in with R by calling </p>
 
 
         shinyhelper::helper(
-          checkboxInput("lm_transfer","Use measured metabolites to adjust Prediciton"),
+          shiny::checkboxInput("lm_transfer","Use measured metabolites to adjust Prediciton"),
           icon = "question-circle",
           colour = "#696969",
           type = "inline",
@@ -171,22 +171,22 @@ The coefficients of the model can be selected or unselected depending on the nee
 <p>To analyze the linear model click on &quot;Analyze Linear Model&quot; once. (if the checkbox is set a linear model will be trained and utilized on the predictions independant from this step)</p>
 <p>The program maps the molecules through Isomeric SMILES so the new SMILES should be the same SMILES as they were in the original data set, otherwise a connection between two metabolites can not be drawn. </p>
 "),
-        conditionalPanel(
+        shiny::conditionalPanel(
           condition = "input.lm_transfer == true",
 
-          fileInput("lm_data", h3("Transfer data to train lm as .xlsx file"), accept = ".xlsx"),
+          shiny::fileInput("lm_data", h3("Transfer data to train lm as .xlsx file"), accept = ".xlsx"),
 
-          checkboxGroupInput("lm_predictors", h3("Choose components of lm"),
+          shiny::checkboxGroupInput("lm_predictors", h3("Choose components of lm"),
                              choices = list("x^2" = 1,
                                             "x^3"= 2,
                                             "log(x)" = 3,
                                             "exp(x)" = 4,
                                             "sqrt(x)" = 5)),
-          actionButton("lm_analyze","Analyze Linear Model")
+          shiny::actionButton("lm_analyze","Analyze Linear Model")
 
           ),
-        textInput("smiles", "Input SMILES", value = ""),
-        actionButton("single_pred","Calculate single input"),
+        shiny::textInput("smiles", "Input SMILES", value = ""),
+        shiny::actionButton("single_pred","Calculate single input"),
         shinyhelper::helper(
           fileInput("preddata", h3("New data to predict as .xlsx file"), accept = ".xlsx"),
           icon = "question-circle",
@@ -200,8 +200,8 @@ The coefficients of the model can be selected or unselected depending on the nee
 <li>HMDB (if model used uses HMDB descriptors)</li>
 </ul>
 "),
-        actionButton("mult_pred","Calculate predictions for input file"),
-        downloadButton("save_mult_pred","Save predictions for input file")
+        shiny::actionButton("mult_pred","Calculate predictions for input file"),
+        shiny::downloadButton("save_mult_pred","Save predictions for input file")
 
       )
 
@@ -213,17 +213,17 @@ The coefficients of the model can be selected or unselected depending on the nee
       # Output:
 
 
-      add_busy_spinner(spin = "fading-circle"),
-      verbatimTextOutput("single_pred_out"),
-      tableOutput("mult_pred_out"),
-      verbatimTextOutput("value"),
-      verbatimTextOutput("medoidtable"),
-      tableOutput("medoids"),
-      verbatimTextOutput("scatterplot"),
-      plotOutput("plot"),
-      verbatimTextOutput("boxplot"),
-      plotOutput("plot2"),
-      plotOutput("lmplot")
+      shinybusy::add_busy_spinner(spin = "fading-circle"),
+      shiny::verbatimTextOutput("single_pred_out"),
+      shiny::tableOutput("mult_pred_out"),
+      shiny::verbatimTextOutput("value"),
+      shiny::verbatimTextOutput("medoidtable"),
+      shiny::tableOutput("medoids"),
+      shiny::verbatimTextOutput("scatterplot"),
+      shiny::plotOutput("plot"),
+      shiny::verbatimTextOutput("boxplot"),
+      shiny::plotOutput("plot2"),
+      shiny::plotOutput("lmplot")
 
     )
   )
@@ -231,10 +231,10 @@ The coefficients of the model can be selected or unselected depending on the nee
 # Server ----
 server <- function(input, output) {
 
-  text_log <- reactiveVal("")
-  observe_helpers()
-    v_train<- reactive({
-      validate(
+  text_log <- shiny::reactiveVal("")
+  shinyhelper::observe_helpers()
+    v_train<- shiny::reactive({
+      shiny::validate(
         need(input$inputdata != "", "Please select a excel sheet with the required data"),
 
 
@@ -242,25 +242,25 @@ server <- function(input, output) {
     })
 
     # Calculate and evaluate new Model ----
-  calc_model<- reactive ({
+  calc_model<- shiny::reactive ({
 
     shiny.train(raw_data= as.data.frame(
                 readxl::read_excel(input$inputdata$datapath,sheet=1)),
                 method = input$method)
 
     })
-  observeEvent(input$train,{
-               output$scatterplot<- renderPrint({
+    shiny::observeEvent(input$train,{
+               output$scatterplot<- shiny::renderPrint({
                  print("Scatterplot with identity")
                 })
-               output$plot <- renderPlot({
+               output$plot <- shiny::renderPlot({
                  # Check Input Data -------
                  v_train()
                  calc_model()$plot})
-               output$boxplot<- renderPrint({
+               output$boxplot<- shiny::renderPrint({
                  print("Boxplot with general Performance")
                })
-                output$plot2<- renderPlot({
+                output$plot2<- shiny::renderPlot({
                   plot.boxplot(calc_model())
                   })}
                )
@@ -268,7 +268,7 @@ server <- function(input, output) {
 
 
   # Selective Measuring 2.0 ----
-  cluster_calc <- reactive( {
+  cluster_calc <- shiny::reactive( {
     shiny.sm(raw_data = as.data.frame(readxl::read_excel(input$inputdata$datapath,sheet=1)),
              method = input$method, k_cluster = input$k)
 
@@ -277,18 +277,18 @@ server <- function(input, output) {
 
 
 
-  observeEvent(input$sm2, {
-                output$medoidtable<- renderPrint({
+    shiny::observeEvent(input$sm2, {
+                output$medoidtable<- shiny::renderPrint({
                   print("Medoids:")
                 })
-                output$medoids<- renderTable({
+                output$medoids<- shiny::renderTable({
                   v_train()
                   cluster<- cluster_calc ()
                   cluster$medoids[,c("NAME","SMILES")]
                 })
                 })
 
-  output$save_predictors<- downloadHandler(
+  output$save_predictors<- shiny::downloadHandler(
     filename = function() {
            paste('predictor_set_', Sys.Date(), '.xlsx', sep='')
          },
@@ -297,7 +297,7 @@ server <- function(input, output) {
     }
   )
 
-  output$save_model<- downloadHandler(
+  output$save_model<- shiny::downloadHandler(
     filename = function() {
       paste('model-', Sys.Date(), sep='')
     },
@@ -306,7 +306,7 @@ server <- function(input, output) {
     }
   )
 
-  output$save_cluster <- downloadHandler(
+  output$save_cluster <- shiny::downloadHandler(
     filename = paste("Cluster_k_",input$k,".xlsx",sep=""),
     content = function(file) {
 
@@ -324,10 +324,10 @@ server <- function(input, output) {
 
 
   # Create lm to adjust RT ----
-  lm_adjust<- reactive({
+  lm_adjust<- shiny::reactive({
 
 
-    train.lm( original_data= readRDS(input$pretrained_model$datapath)$predictor_set,
+    train.lm( original_data= base::readRDS(input$pretrained_model$datapath)$predictor_set,
               new_data = as.data.frame(
                 readxl::read_excel(input$lm_data$datapath,sheet=1)),
               predictors = input$lm_predictors
@@ -335,16 +335,16 @@ server <- function(input, output) {
 
   })
 
-  observeEvent(input$lm_analyze,{
+  shiny::observeEvent(input$lm_analyze,{
 
-    output$lmplot<- renderPlot({
+    output$lmplot<- shiny::renderPlot({
 
       original_data <- readRDS(input$pretrained_model$datapath)$predictor_set
       new_data <- as.data.frame(
         readxl::read_excel(input$lm_data$datapath,sheet=1))
       lm_model <- lm_adjust()
 
-      new_data$SMILES<-lapply(new_data$SMILES,
+      new_data$SMILES <- lapply(new_data$SMILES,
                               function(x) rcdk::parse.smiles(as.character(unlist(x)))[[1]])
       new_data$SMILES <- lapply(new_data$SMILES,
                                 function(x) rcdk::get.smiles(x, rcdk::smiles.flavors(c("CxSmiles"))))
@@ -363,8 +363,8 @@ server <- function(input, output) {
   })
 
   # Predict single ----
-  observeEvent(input$single_pred,{
-    model<- readRDS(input$pretrained_model$datapath)
+  shiny::observeEvent(input$single_pred,{
+    model<- base::readRDS(input$pretrained_model$datapath)
 
     x<- getCD(data.frame(SMILES=c(input$smiles,input$smiles),
                            RT= c(0,0)))[1,]
@@ -391,14 +391,14 @@ server <- function(input, output) {
 
 
   })
-  output$single_pred_out<- renderText({
+  output$single_pred_out<- shiny::renderText({
     text_log()
   })
 
   # Predict Mult ----
-  mult_pred_react<- reactive({
-   mult.pred(model = readRDS(input$pretrained_model$datapath),
-             pred_data = as.data.frame(
+  mult_pred_react<- shiny::reactive({
+   mult.pred(model = base::readRDS(input$pretrained_model$datapath),
+             pred_data = base::as.data.frame(
                readxl::read_excel(input$preddata$datapath,sheet=1)),
              lm_transfer = input$lm_transfer,
              lm_model = lm_adjust(),
@@ -407,13 +407,13 @@ server <- function(input, output) {
 
   })
 
-  observeEvent(input$mult_pred,{
+  shiny::observeEvent(input$mult_pred,{
         output$mult_pred_out<- renderTable({
       mult_pred_react()[,c("NAME","SMILES","pred_RT")]
     })
 
   })
-  output$save_mult_pred <- downloadHandler(
+  output$save_mult_pred <- shiny::downloadHandler(
     filename = "predictions.xlsx",
     content = function(file) {
       xlsx::write.xlsx(mult_pred_react(), file, sheetName = "predictions")
@@ -422,7 +422,6 @@ server <- function(input, output) {
   return(NULL)
 }
 
-# Create Shiny app ----
-#devtools::load_all("")
+# Call Shiny app ----
 shinyApp(ui = ui, server = server)
 }
