@@ -366,29 +366,33 @@ server <- function(input, output) {
   shiny::observeEvent(input$single_pred,{
     model<- base::readRDS(input$pretrained_model$datapath)
 
-    x<- getCD(data.frame(SMILES=c(input$smiles,input$smiles),
-                           RT= c(0,0)))[1,]
+    x<- try(suppressWarnings(getCD(data.frame(SMILES=c(input$smiles,input$smiles),
+                           RT= c(0,0)))[1,], classes = "warning"), silent= TRUE)
 
+    if(inherits(x,"try-error")){
 
-
-    x<- x[colnames(model$predictor_set)]
-    x$RT<- NULL
-    x<- as.matrix(x)
-    x<- rbind(x,x)
-    x<- predict(model$scaling_model,x)
-
-    if(model$method== "glmnet"){
-      pred<- glmnet::predict.glmnet(model$final_model,newx=x)
-      pred<- pred[1]
+      text_log(paste(text_log(),"Error with SMILES:",isolate(input$smiles),"\n"))
+      text_log(paste(text_log(),"Please check if input is valid SMILES \n"))
     }else{
-      pred<- predict(model$final_model,newx=x)
-      pred<- pred[1]
+
+      x<- x[colnames(model$predictor_set)]
+      x$RT<- NULL
+      x<- as.matrix(x)
+      x<- rbind(x,x)
+      x<- predict(model$scaling_model,x)
+
+      if(model$method== "glmnet"){
+        pred<- glmnet::predict.glmnet(model$final_model,newx=x)
+        pred<- pred[1]
+      }else{
+        pred<- predict(model$final_model,newx=x)
+        pred<- pred[1]
+      }
+
+        text_log(paste(text_log(),"Prediction for the following Metabolite \n"))
+        text_log(paste(text_log(),"SMILES:",isolate(input$smiles),"\n"))
+        text_log(paste(text_log(), "Retention time: ",pred,"\n"))
     }
-
-      text_log(paste(text_log(),"Prediction for the following Metabolite \n"))
-      text_log(paste(text_log(),"SMILES:",isolate(input$smiles),"\n"))
-      text_log(paste(text_log(), "Retention time: ",pred,"\n"))
-
 
   })
   output$single_pred_out<- shiny::renderText({
