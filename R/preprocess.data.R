@@ -24,9 +24,9 @@ preprocess.data <- function(data, preprocessed = F, include_HMDB =F,
   if (preprocessed) {
     db_rt <- data
   } else {
-    # Calculate Chemical Descriptors 
-    db_rt <- getCD(data)
-    
+    # Calculate Chemical Descriptors
+    db_rt <- suppressWarnings(getCD(data), classes = "warning")
+
     if (clean_data) {
       
       # clean data, exclude columns with
