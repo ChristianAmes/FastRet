@@ -1,7 +1,7 @@
 shiny.train<- function(raw_data, method){
 
   raw_data<- data.frame(raw_data)
-  validate.inputdata(raw_data)
+  raw_data<- validate.inputdata(raw_data)
 
   # Add Predictors to Data -----
   tmp_data <- preprocess.data(raw_data)
