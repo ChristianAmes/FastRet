@@ -75,7 +75,7 @@ create.split <- function(split_method, data, n = 10) {
     return(split)
 
   } else {
-    stop(paste("Split method ", split_method, " not known"))
+    stop(paste0("Split method ", split_method, " not known"))
   }
 }
 

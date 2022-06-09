@@ -21,11 +21,16 @@
 #' @export
 
 fastret.workflow <- function(data, method = "glmnet",
-                           verbose = FALSE, data_set_name = "data set", final_model = T,
-                           preprocessed = F, interaction_terms = F,
-                           nfolds = 2, include_polynomial = F,
-                           degree_polynomial = 2, scale = T) {
-  reverse_split <- F
+                           verbose = FALSE,
+                           data_set_name = "data set",
+                           final_model = TRUE,
+                           preprocessed = FALSE,
+                           interaction_terms = FALSE,
+                           nfolds = 2,
+                           include_polynomial = FALSE,
+                           degree_polynomial = 2,
+                           scale = TRUE) {
+  reverse_split <- FALSE
   split_method<- "CV"
   # calculate Chemical descriptors, clear data
   # and add additional columns (polynomials and

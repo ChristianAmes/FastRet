@@ -50,7 +50,7 @@ shiny.sm<-function(raw_data, method, k_cluster){
   l<- list()
 
 
-  for (i in c(1:k_cluster)){
+  for (i in c(seq_len(k_cluster))){
     distances<- tmp_data[which(cluster$cluster==i),]
     distances<- rbind(cluster$centers[i,],distances)
     distances<- stats::dist(distances, method="euclidean")

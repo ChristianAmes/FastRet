@@ -3,7 +3,7 @@
 
 plot.boxplot <- function(model1, model2, model3, model4,
                          main = "main", name1 = "model1", name2 = "model2",
-                         name3 = "model3", name4 = "model4", save_plot = F) {
+                         name3 = "model3", name4 = "model4", save_plot = FALSE) {
   stats <- t(matrix(as.numeric(unlist(model1$stats)),
                     nrow = 4))
   rmse <- stats[, 1]

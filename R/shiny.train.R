@@ -11,7 +11,7 @@ shiny.train<- function(raw_data, method){
   method<- c("glmnet","xgboost")[as.numeric(method)]
   # Train and evaluate Regression Model -----
 
-  model<-fastret.workflow(tmp_data,method= method,preprocessed = T)
+  model<-fastret.workflow(tmp_data,method= method,preprocessed = TRUE)
 
   return(model)
 
