@@ -9,7 +9,9 @@ validate.inputdata<- function(raw_data){
 
   include <- c(T,T,T)
   include <- c(include,
-                   sapply(raw_data[,-which(colnames(raw_data)%in% c("RT", "NAME","SMILES"))],function(x) is.numeric(x)))
+                   vapply(raw_data[,-which(colnames(raw_data)%in% c("RT", "NAME","SMILES"))],
+                          FUN = function(x) is.numeric(x),
+                          FUN.VALUE = logical(length = 1)))
 
   if(ncol(raw_data)!=length(include)) include<- c(include[1:3],all(include[4:length(include)]))
 

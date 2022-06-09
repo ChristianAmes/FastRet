@@ -26,7 +26,7 @@ Before starting our analysis lets save some data just as you might have it layin
 
 ```{r data}
 data(RP)
-xlsx::write.xlsx(RP,file= "~/RP_data.xlsx",row.names = F)
+xlsx::write.xlsx(RP,file= "~/RP_data.xlsx",row.names = FALSE)
 ``` 
 Starting the interface is done with one line of code. From now on there is no need to use R anymore.
 ```{r gui,eval = FALSE}
@@ -56,13 +56,13 @@ In this mode your previously saved model can be used to predict on new data. Thi
 
 
 ### Adjusting measurements using a linear model 
-If you have measured some metabolites on your new experiment setup that were also measured on the original setup, you can use this method to adjust the models prediction with a linear model. Simply check "Use measured metabolites to adjust Prediction" and upload an exel file with the corresponding SMILES/retention time data. After you click on "Analyze Linear Model" a Scatterplot will be shown, displaying the old vs the new retention times of your measured metabolites. THis plot helps you decide which components of the linear model to select. 
+If you have measured some metabolites on your new experiment setup that were also measured on the original setup, you can use this method to adjust the models prediction with a linear model. Simply check "Use measured metabolites to adjust Prediction" and upload an exel file with the corresponding SMILES/retention time data. After you click on "Analyze Linear Model" a scatterplot will be shown, displaying the old vs the new retention times of your measured metabolites. This plot helps you decide which components of the linear model to select. 
 
 ![05](05.png){width=49%}
 
 
 ## Selective Measuring 
-This mode calculates, for a given data set, the best k molecules to be measured for a retention time prediction on a new experiment setup. It uses a combination of Ridge Regression and k-means to determine the best representatives of your dataset. Representatives as well as their corresponding clusters can be downloaded afterwards as an excel file. This step should be used once you have a predictive model ond/or data set and want to use it for new column/gradient/temperature... combination.
+This mode calculates, for a given data set, the best k molecules to be measured for a retention time prediction on a new experiment setup. It uses a combination of Ridge Regression and k-means to determine the best representatives of your dataset. Representatives as well as their corresponding clusters can be downloaded afterwards as an excel file. This step should be used once you have a predictive model and/or data set and want to use it for new column/gradient/temperature... combination.
 
 By providing an excel file with SMILES, NAME and RT and a custom k you can simply start the process and export another excel file which will show your clusters as well as your metabolites.
 
